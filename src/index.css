@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.bg-clouds {
+    background:
+        linear-gradient(
+            rgba(0, 0, 0, .4),
+            rgba(0, 0, 0, .4)
+        ),
+        url("/public/background/clouds640.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.bg-colors {
+    background:
+    linear-gradient(
+        rgba(0, 0, 0, .4),
+        rgba(0, 0, 0, .4)
+    ),
+    url("/public/background/jr-korpa-640.jpg");
+background-position: center;
+background-size: cover;
+background-repeat: no-repeat;
+}
+.bg-space {
+    background:
+    linear-gradient(
+        rgba(0, 0, 0, .4),
+        rgba(0, 0, 0, .4)
+    ),
+    url("/public/background/space640.jpg");
+background-position: center;
+background-size: cover;
+background-repeat: no-repeat;
+}
+
+@media (min-width: 640px) {
+    .bg-clouds {
+    background:
+        linear-gradient(
+            rgba(0, 0, 0, .4),
+            rgba(0, 0, 0, .4)
+        ),
+        url("/public/background/clouds1920.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    }
+    .bg-colors {
+        background:
+        linear-gradient(
+            rgba(0, 0, 0, .4),
+            rgba(0, 0, 0, .4)
+        ),
+        url("/public/background/jr-korpa-1920.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    }
+    .bg-space {
+        background:
+        linear-gradient(
+            rgba(0, 0, 0, .4),
+            rgba(0, 0, 0, .4)
+        ),
+        url("/public/background/space1920.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    }
+}
+
+@media (min-width: 1024px) {
+    .bg-clouds {
+        background:
+            linear-gradient(
+                rgba(0, 0, 0, .4),
+                rgba(0, 0, 0, .4)
+            ),
+            url("/public/background/clouds2400.jpg");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    .bg-colors {
+        background:
+        linear-gradient(
+            rgba(0, 0, 0, .4),
+            rgba(0, 0, 0, .4)
+        ),
+        url("/public/background/jr-korpa-2400.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    }
+    .bg-space {
+        background:
+        linear-gradient(
+            rgba(0, 0, 0, .4),
+            rgba(0, 0, 0, .4)
+        ),
+        url("/public/background/space2400.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    }
+}
+
+@media (min-width: 1536px) {
+    .bg-clouds {
+        background:
+            linear-gradient(
+                rgba(0, 0, 0, .4),
+                rgba(0, 0, 0, .4)
+            ),
+            url("/public/background/clouds3950.jpg");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    .bg-colors {
+        background:
+        linear-gradient(
+            rgba(0, 0, 0, .4),
+            rgba(0, 0, 0, .4)
+        ),
+        url("/public/background/jr-korpa-3600.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    }
+    .bg-space {
+        background:
+        linear-gradient(
+            rgba(0, 0, 0, .4),
+            rgba(0, 0, 0, .4)
+        ),
+        url("/public/background/space2911.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    }
+}
+
+.error {
+    margin-top: -8px;
+    text-align: right;
+    font-family: "Mulish", sans-serif;
+    color: rgb(255, 136, 0);
+}
