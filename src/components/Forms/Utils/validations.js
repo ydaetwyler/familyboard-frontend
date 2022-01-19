@@ -101,7 +101,7 @@ export const validateEvent = Yup.object({
         .test(
             "is-date-future", 
             "Date must be today or in the future",
-            date => new Date(stringToDate(date)).setHours(0,0,0,0) >= new Date().setHours(0,0,0,0)
+            date => date ? new Date(stringToDate(date)).setHours(0,0,0,0) >= new Date().setHours(0,0,0,0) : null
         )
         ,
     activityLocation: Yup.string()

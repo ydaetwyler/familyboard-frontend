@@ -66,9 +66,13 @@ export const getTimeFromUtc = timestamp => {
 }
 
 export const stringToDate = (string) => {
-    let dateString = string
-    dateString = dateString.split(".")
-    const ISOFormat = new Date(parseInt(dateString[2]),parseInt(dateString[1])-1,parseInt(dateString[0]))
+    if (/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/.test(string)) {
+        let dateString = string
+        dateString = dateString.split(".")
+        const ISOFormat = new Date(parseInt(dateString[2]),parseInt(dateString[1])-1,parseInt(dateString[0]))
 
-    return ISOFormat.toISOString()  
+        return ISOFormat.toISOString()  
+    } else {
+        return null
+    }
 }
