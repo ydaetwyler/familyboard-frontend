@@ -17,6 +17,7 @@ const UserAccessForm = () => {
             path: "/",
             maxAge: (60*60*24),
             sameSite: 'none',
+            secure: true,
         }),
         onError: () => {
             setErrorCounter(errorCounter + 1)
