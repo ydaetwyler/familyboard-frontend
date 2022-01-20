@@ -17,8 +17,10 @@ const NewUserAccessForm = () => {
     const [fail, setFail] = useState(false)
     const [signUp, { loading, error }] = useMutation(SIGN_UP, {
         onCompleted: (data) => setCookie('userToken', data.signUp, { 
+            path: "/",
             maxAge: (60*60*24),
-            sameSite: false
+            secure: false,
+            domain: "family-board.ch"
         }),
         onError: () => setFail(true)
     })
