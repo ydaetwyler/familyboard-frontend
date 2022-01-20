@@ -16,7 +16,6 @@ const UserAccessForm = () => {
         onCompleted: (data) => setCookie('userToken', data.signIn, { 
             maxAge: (60*60*24),
             sameSite: false,
-            secure: true,
         }),
         onError: () => {
             setErrorCounter(errorCounter + 1)
