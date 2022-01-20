@@ -13,7 +13,8 @@ const UserAccessForm = () => {
     const [errorCounter, setErrorCounter] = useState(0)
     const [counter, setCounter] = useState(0)
     const [signIn, { loading, error }] = useMutation(SIGN_IN, {
-        onCompleted: (data) => setCookie('userToken', data.signIn, { 
+        onCompleted: (data) => setCookie('userToken', data.signIn, {
+            path: "/",
             maxAge: (60*60*24),
             sameSite: false,
         }),
