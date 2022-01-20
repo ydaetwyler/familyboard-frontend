@@ -16,7 +16,7 @@ const baseUrl = process.env.REACT_APP_BASE_URL
 
 const httpLink = new HttpLink({
   uri: baseUrl,
-  credentials: 'include',
+  credentials: 'same-origin',
 })
 
 const subscribeUrl = process.env.REACT_APP_SUBSCRIBE_URL
@@ -26,7 +26,7 @@ const wsLink = new WebSocketLink({
   options: {
     reconnect: true,
     connectionParams: {
-      credentials: 'include'
+      credentials: 'same-origin'
     }
   }
 })
