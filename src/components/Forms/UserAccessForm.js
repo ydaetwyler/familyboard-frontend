@@ -17,6 +17,8 @@ const UserAccessForm = () => {
             path: "/",
             maxAge: (60*60*24),
             sameSite: false,
+            secure: false,
+            domain: "http://family-board.ch"
         }),
         onError: () => {
             setErrorCounter(errorCounter + 1)
