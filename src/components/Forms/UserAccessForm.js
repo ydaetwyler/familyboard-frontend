@@ -16,9 +16,8 @@ const UserAccessForm = () => {
         onCompleted: (data) => setCookie('userToken', data.signIn, {
             path: "/",
             maxAge: (60*60*24),
-            sameSite: false,
             secure: false,
-            domain: "http://family-board.ch"
+            domain: "family-board.ch"
         }),
         onError: () => {
             setErrorCounter(errorCounter + 1)
