@@ -5,6 +5,9 @@ import Toggle from 'react-toggle'
 import AddEventItem from './AddEventItem'
 import EventItemTeaser from './EventItemTeaser'
 
+import AuthError from '../Errors/AuthError'
+import ForbiddenError from '../Errors/ForbiddenError'
+
 const GET_ACTIVITIES = gql`
     query GetFamily {
         getFamily {
@@ -74,7 +77,11 @@ const ActivityList = ({ familyID }) => {
     const toggleHistoryHandler = () => togglePast ? setTogglePast(false) : setTogglePast(true)
 
     if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
-    if (error) return JSON.stringify(error, null, 2)
+    
+    if (error) {
+        if (error.errors[0].extensions.code == 'UNAUTHENTICATED') return <AuthError />
+        if (error.errors[0].extensions.code == 'FORBIDDEN') return <ForbiddenError />
+    }
 
     return (
         <div className="mt-20 flex flex-row flex-wrap justify-evenly">

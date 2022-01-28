@@ -5,10 +5,20 @@ import { useMutation } from '@apollo/client'
 import { validateComment } from '../Forms/Utils/validations'
 import TextArea from '../Forms/Utils/TextArea'
 
+import AuthError from '../Errors/AuthError'
+import ForbiddenError from '../Errors/ForbiddenError'
+
 import { CREATE_EVENT_COMMENT } from '../../utils/mutations'
 
 const AddEventComment = ({ id }) => {
     const [createEventComment, { loading, error }] = useMutation(CREATE_EVENT_COMMENT)
+
+    if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
+    
+    if (error) {
+        if (error.errors[0].extensions.code == 'UNAUTHENTICATED') return <AuthError />
+        if (error.errors[0].extensions.code == 'FORBIDDEN') return <ForbiddenError />
+    }
 
     return (
         <div>

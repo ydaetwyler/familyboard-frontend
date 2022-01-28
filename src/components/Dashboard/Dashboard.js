@@ -6,6 +6,9 @@ import Family from '../Family/Family'
 import User from '../User/User'
 import ActivityList from '../Activity/ActivityList'
 
+import AuthError from '../Errors/AuthError'
+import ForbiddenError from '../Errors/ForbiddenError'
+
 import { SELECT_BG } from '../../utils/mutations'
 
 const GET_FAMILY = gql`
@@ -20,7 +23,7 @@ const Dashboard = () => {
     const { loading, error, data } = useQuery(GET_FAMILY)
     const [cookies, setCookie, removeCookie] = useCookies(['userToken'])
     const [bgSelection, setBgSelection] = useState(null)
-    const [selectBg, { error: setBgError }] = useMutation(SELECT_BG)
+    const [selectBg, { loading: setBgLoading, error: setBgError }] = useMutation(SELECT_BG)
 
     useEffect(() => {
         if (bgSelection) {
@@ -38,8 +41,22 @@ const Dashboard = () => {
     if (!cookies.userToken) return <Login />
 
     if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
-    if (error) return JSON.stringify(error, null, 2)
-    if (setBgError) return JSON.stringify(setBgError, null, 2)
+    if (error || setBgError) {
+        if (
+            error.errors[0].extensions.code == 'UNAUTHENTICATED'
+            ||
+            setBgError.errors[0].extensions.code == 'UNAUTHENTICATED'
+        ) {
+            return <AuthError />
+        }
+        if (
+            error.errors[0].extensions.code == 'FORBIDDEN'
+            ||
+            setBgError.errors[0].extensions.code == 'FORBIDDEN'
+        ) {
+            return <ForbiddenError />
+        }
+    }
 
     window.history.replaceState(null, "Dashboard", "/")
 

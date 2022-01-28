@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react'
-import { gql, useMutation } from '@apollo/client'
+import React, { useState } from 'react'
+import { useMutation } from '@apollo/client'
 import { Formik, Form } from 'formik'
 
 import TextInput from '../Forms/Utils/TextInput'
 import { INVITE } from '../../utils/mutations'
 import { validateEmail} from '../Forms/Utils/validations'
+
+import AuthError from '../Errors/AuthError'
+import ForbiddenError from '../Errors/ForbiddenError'
 
 const Invite = ({ familyID }) => {
     const [fail, setFail] = useState(false)
@@ -14,7 +17,11 @@ const Invite = ({ familyID }) => {
     })
 
     if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
-    if (error) return JSON.stringify(error, null, 2)
+    
+    if (error) {
+        if (error.errors[0].extensions.code == 'UNAUTHENTICATED') return <AuthError />
+        if (error.errors[0].extensions.code == 'FORBIDDEN') return <ForbiddenError />
+    }
 
     return (
         <div>

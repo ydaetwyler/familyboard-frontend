@@ -12,6 +12,9 @@ import WeatherForecast from './WeatherForecast'
 import AddEventComment from './AddEventComment'
 import UserOverview from '../User/UserOverview'
 
+import AuthError from '../Errors/AuthError'
+import ForbiddenError from '../Errors/ForbiddenError'
+
 import TextInput from '../Forms/Utils/TextInput'
 import TextArea from '../Forms/Utils/TextArea'
 import { validateEvent } from '../Forms/Utils/validations'
@@ -178,8 +181,23 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather, refetchEvents }) 
         }
     })
 
-    if (loading || loadingUpdateEvent) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
-    if (error || errorUpdateEvent) return JSON.stringify(error ? error : errorUpdateEvent, null, 2)
+    if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
+    if (error || errorUpdateEvent) {
+        if (
+            error.errors[0].extensions.code == 'UNAUTHENTICATED'
+            ||
+            errorUpdateEvent.errors[0].extensions.code == 'UNAUTHENTICATED'
+        ) {
+            return <AuthError />
+        }
+        if (
+            error.errors[0].extensions.code == 'FORBIDDEN'
+            ||
+            errorUpdateEvent.errors[0].extensions.code == 'FORBIDDEN'
+        ) {
+            return <ForbiddenError />
+        }
+    }
 
     return (
         <div>

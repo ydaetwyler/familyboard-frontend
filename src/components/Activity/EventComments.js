@@ -5,6 +5,9 @@ import { getExtraShortDate, getTime } from '../../utils/dateHelpers.js'
 
 import { REMOVE_EVENT_COMMENT } from '../../utils/mutations'
 
+import AuthError from '../Errors/AuthError'
+import ForbiddenError from '../Errors/ForbiddenError'
+
 const GET_EVENT_COMMENT = gql`
     query GetEventComment($_id: ID!) {
         getEventComment(_id: $_id) {
@@ -32,7 +35,7 @@ const EventComments = ({ id, eventId }) => {
     const { loading: checkCommentOwnerLoading, error: checkCommentOwnerError, data: checkCommentOwnerData, refetch: checkCommentOwnerRefetch, subscribeToMore: checkCommentOwnerSubscribeToMore } = useQuery(CHECK_COMMENT_OWNER, {
         variables: { _id: id }
     })
-    const [removeEventComment] = useMutation(REMOVE_EVENT_COMMENT, {
+    const [removeEventComment, {loading: removeEventCommentLoading, error: removeEventCommentError}] = useMutation(REMOVE_EVENT_COMMENT, {
         onError: () => setFail(true)
     })
 
@@ -50,6 +53,29 @@ const EventComments = ({ id, eventId }) => {
                 _id: eventId
             } 
         })
+    }
+
+    if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
+
+    if (error || checkCommentOwnerError || removeEventCommentError) {
+        if (
+            error.errors[0].extensions.code == 'UNAUTHENTICATED'
+            ||
+            checkCommentOwnerError.errors[0].extensions.code == 'UNAUTHENTICATED'
+            ||
+            removeEventCommentError.errors[0].extensions.code == 'UNAUTHENTICATED'
+        ) {
+            return <AuthError />
+        }
+        if (
+            error.errors[0].extensions.code == 'FORBIDDEN'
+            ||
+            checkCommentOwnerError.errors[0].extensions.code == 'FORBIDDEN'
+            ||
+            removeEventCommentError.errors[0].extensions.code == 'FORBIDDEN'
+        ) {
+            return <ForbiddenError />
+        }
     }
 
     return (

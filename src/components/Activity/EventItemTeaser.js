@@ -11,6 +11,9 @@ import JoinedBadge from './JoinedBadge'
 import UpdateBadge from './UpdateBadge'
 import NewCommentBadge from './NewCommentBadge'
 
+import AuthError from '../Errors/AuthError'
+import ForbiddenError from '../Errors/ForbiddenError'
+
 const GET_EVENT_ITEM = gql`
     query GetEventItem($_id: ID!) {
         getEventItem(_id: $_id) {
@@ -211,7 +214,27 @@ const EventItemTeaser = ({ eventId }) => {
     }, [getCoordinatesData])
 
     if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
-    if (error) return JSON.stringify(error, null, 2)
+
+    if (error || getWeatherError || getCoordinatesError) {
+        if (
+            error.errors[0].extensions.code == 'UNAUTHENTICATED'
+            ||
+            getWeatherError.errors[0].extensions.code == 'UNAUTHENTICATED'
+            ||
+            getCoordinatesError.errors[0].extensions.code == 'UNAUTHENTICATED'
+        ) {
+            return <AuthError />
+        }
+        if (
+            error.errors[0].extensions.code == 'FORBIDDEN'
+            ||
+            getWeatherError.errors[0].extensions.code == 'FORBIDDEN'
+            ||
+            getCoordinatesError.errors[0].extensions.code == 'FORBIDDEN'
+        ) {
+            return <ForbiddenError />
+        }
+    }
 
     if (dateDiff > 7 && !data.getEventItem.activityApiCityNotFound) {
         return (
