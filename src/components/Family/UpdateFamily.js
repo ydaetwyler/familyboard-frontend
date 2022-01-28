@@ -3,6 +3,7 @@ import { gql, useMutation } from '@apollo/client'
 import { Formik, Form } from 'formik'
 
 import Invite from './Invite'
+import UserOverview from '../User/UserOverview'
 
 import TextInput from '../Forms/Utils/TextInput'
 import { UPDATE_FAMILY } from '../../utils/mutations'
@@ -55,18 +56,13 @@ const UpdateFamily = ({ familyID, clicked, setClicked, initialFamily, initialAva
                 Members
             </h3>
             <div className="flex flex-row overflow-x-scroll mt-2">
-                <div className="flex flex-col items-center">
-                    {familyMembers.map((member) => {
-                        if (member.active) {
-                            return <p key={member.userName} className="text-white">{member.userName}</p>
-                        }
-                    })}
-                    {familyMembers.map((member) => {
-                        if (member.active) {
-                            return <img key={member.userName} className="h-12 w-12" src={member.avatarUrl} />
-                        }
-                    })}
-                </div>
+                {familyMembers.map((member) => {
+                    if (member.active) {
+                        return <UserOverview 
+                            key={member.userName} userName={member.userName} avatarUrl={member.avatarUrl} 
+                        />
+                    }
+                })}
             </div>
             <h3 className="mt-8 mb-2 text-center text-4xl text-white font-medium leading-9">
                 Change family

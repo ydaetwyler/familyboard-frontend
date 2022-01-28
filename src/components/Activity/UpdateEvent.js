@@ -10,6 +10,7 @@ import Gallery from './Gallery'
 import EventComments from './EventComments'
 import WeatherForecast from './WeatherForecast'
 import AddEventComment from './AddEventComment'
+import UserOverview from '../User/UserOverview'
 
 import TextInput from '../Forms/Utils/TextInput'
 import TextArea from '../Forms/Utils/TextArea'
@@ -304,14 +305,13 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather, refetchEvents }) 
                     </label>
                     <h4 className="block text-xl font-medium text-gray-300">Participants</h4>
                     <div className="flex flex-row overflow-x-scroll mt-3 mb-9">
-                        <div className="flex flex-col items-center">
-                            {participants ? participants.map((member) => 
-                                <p key={member.userName} className="text-white">{member.userName}</p>
-                            ) : null}
-                            {participants ? participants.map((member) =>
-                                <img key={member.userName} className="h-12 w-12" src={member.avatarUrl} />
-                            ) : null}
-                        </div>
+                        {participants ? participants.map((member) =>  
+                        <UserOverview 
+                            key={member.userName} 
+                            userName={member.userName} 
+                            avatarUrl={member.avatarUrl} 
+                        />
+                        ) : null}
                     </div>
                     <WeatherForecast weather={weather} />
                     <h4 className="block mt-9 text-xl font-medium text-gray-300">Comments</h4>
