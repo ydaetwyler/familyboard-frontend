@@ -14,8 +14,10 @@ const ResetPasswordForm = () => {
     const [fail, setFail] = useState(false)
     const [resetPassword, { loading, error }] = useMutation(RESET_PASSWORD, {
         onCompleted: (data) => setCookie('userToken', data.resetPassword, { 
+            path: "/",
             maxAge: (60*60*24),
-            sameSite: false
+            secure: false,
+            domain: (process.env.REACT_APP_ENV == 'local') ? "localhost" : "family-board.ch"
         }),
         onError: () => setFail(true)
     })

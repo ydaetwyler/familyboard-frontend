@@ -20,7 +20,7 @@ const NewUserAccessForm = () => {
             path: "/",
             maxAge: (60*60*24),
             secure: false,
-            domain: "family-board.ch"
+            domain: (process.env.REACT_APP_ENV == 'local') ? "localhost" : "family-board.ch"
         }),
         onError: () => setFail(true)
     })
