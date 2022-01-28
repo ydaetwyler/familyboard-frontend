@@ -10,10 +10,7 @@ const GET_ACTIVITIES = gql`
         getFamily {
            eventList {
                _id,
-               activityDate,
-               activityParticipantsList {
-                   _id
-               }
+               activityDate
            }
         }
     }
