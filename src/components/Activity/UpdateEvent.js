@@ -268,10 +268,10 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather, refetchEvents }) 
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                         <defs>
                                             <linearGradient id="GradientMaps" x2="100%" y2="55%">
-                                                <stop offset="30%" stop-color="#fc2c03" />
-                                                <stop offset="0%" stop-color="#1303fc" />
-                                                <stop offset="90%" stop-color="#1a9900" />
-                                                <stop offset="100%" stop-color="#c9bf00" />
+                                                <stop offset="30%" stopColor="#fc2c03" />
+                                                <stop offset="0%" stopColor="#1303fc" />
+                                                <stop offset="90%" stopColor="#1a9900" />
+                                                <stop offset="100%" stopColor="#c9bf00" />
                                             </linearGradient>
                                         </defs> 
                                     </svg>
