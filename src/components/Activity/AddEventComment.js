@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Formik, Form } from 'formik'
-import { gql, useQuery, useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 
 import { validateComment } from '../Forms/Utils/validations'
 import TextArea from '../Forms/Utils/TextArea'

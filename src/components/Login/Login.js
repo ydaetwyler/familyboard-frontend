@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Link, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Particles from 'react-tsparticles'
 
 import UserAccessForm from '../Forms/UserAccessForm'

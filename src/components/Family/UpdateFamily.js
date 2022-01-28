@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { gql, useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { Formik, Form } from 'formik'
 
 import Invite from './Invite'

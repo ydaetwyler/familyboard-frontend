@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { gql, useQuery, useMutation } from '@apollo/client'
+import { gql, useQuery } from '@apollo/client'
 import Toggle from 'react-toggle'
 
 import AddEventItem from './AddEventItem'

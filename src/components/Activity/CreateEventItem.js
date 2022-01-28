@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Formik, Form } from 'formik'
-import { gql, useQuery, useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 
 import Gallery from './Gallery'
 
