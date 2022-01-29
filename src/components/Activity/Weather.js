@@ -59,7 +59,11 @@ const Weather = ({ id, dateDiff, coordinates, lastCall, savedIcon, savedTemp }) 
     useEffect(() => {
         if (weatherData) {
             setIcon(`http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`)
-            setTemp(`${Math.round(parseFloat(weatherData.temp.day))} °C`)
+            setTemp(`${
+                (dateDiff < 1)
+                    ?   Math.round(parseFloat(weatherData.temp.day))
+                    :   Math.round(parseFloat(weatherData.temp))
+            } °C`)
             setDesc(weatherData.weather[0].description)
             setSunrise(`${getTimeFromUtc(weatherData.sunrise)}`)
             setSunset(`${getTimeFromUtc(weatherData.sunset)}`)
