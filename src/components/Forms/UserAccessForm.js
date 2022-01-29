@@ -17,7 +17,9 @@ const UserAccessForm = () => {
             path: "/",
             maxAge: (60*60*24),
             secure: false,
-            domain: (process.env.REACT_APP_ENV == 'local') ? "localhost" : "family-board.ch"
+            domain: (process.env.REACT_APP_ENV == 'local') ? "localhost" : "family-board.ch",
+            sameSite: 'strict',
+            httpOnly: true
         }),
         onError: () => {
             setErrorCounter(errorCounter + 1)
