@@ -15,11 +15,9 @@ import { validateNewFamily} from '../Forms/Utils/validations'
 const UpdateFamily = ({ familyID, clicked, setClicked, initialFamily, initialAvatar, familyMembers }) => {
     const [emojis, setEmojis] = useState([])
     const [selectEmoji, setSelectEmoji] = useState(initialAvatar)
-    const [fail, setFail] = useState(false)
     
     const [updateFamily, { loading, error }] = useMutation(UPDATE_FAMILY, {
-        onCompleted: () => setClicked(false),
-        onError: () => setFail(true)
+        onCompleted: () => setClicked(false)
     })
 
     const getEmojis = () => {

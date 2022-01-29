@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { gql, useMutation } from '@apollo/client'
 import { Formik, Form } from 'formik'
 import Select from 'react-select'
+import AuthError from '../Errors/AuthError'
+import ForbiddenError from '../Errors/ForbiddenError'
 
 import TextInput from '../Forms/Utils/TextInput'
 import { UPDATE_USER } from '../../utils/mutations'

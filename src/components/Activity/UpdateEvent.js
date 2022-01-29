@@ -71,12 +71,10 @@ const EVENT_COMMENT_SUBSCRIPTION = gql`
 
 const UpdateEvent = ({ clicked, setClicked, id, item, weather, refetchEvents }) => {
     const [removeParticipant] = useMutation(REMOVE_PARTICIPANT, {
-        onCompleted: () => refetchEvents,
-        onError: () => setFail(true)
+        onCompleted: () => refetchEvents
     })
     const [addParticipant] = useMutation(ADD_PARTICIPANT, {
-        onCompleted: () => refetchEvents,
-        onError: () => setFail(true)
+        onCompleted: () => refetchEvents
     })
     const { loading, error, data, refetch, subscribeToMore } = useQuery(GET_EVENT_PARTICIPANTS, {
         variables: { _id: id }
@@ -87,15 +85,12 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather, refetchEvents }) 
     const [galleryClicked, setGalleryClicked] = useState(false)
     const [imgUrl, setImgUrl] = useState(item.activityImageUrl)
     const [participants, setParticipants] = useState([])
-    const [fail, setFail] = useState(false)
     const [joined, setJoined] = useState()
     const [checkUserParticipant] = useMutation(CHECK_USER_PARTICIPANT, {
-        onError: () => setFail(true),
         onCompleted: data => setJoined(data.checkUserParticipant)
     })
     const [updateEventItem, { loading: loadingUpdateEvent, error: errorUpdateEvent }] = useMutation(UPDATE_EVENT_ITEM, {
-        onCompleted: () => setClicked(false),
-        onError: () => setFail(true)
+        onCompleted: () => setClicked(false)
     })
     const [removeNotifications] = useMutation(REMOVE_NOTIFICATIONS, {
         onCompleted: () => refetchEvents
@@ -156,6 +151,7 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather, refetchEvents }) 
         window.addEventListener('keydown', handleEsc)
     })
 
+    // id for eventItem
     const handleJoinChange = () => {
         if (joined) {
             removeParticipant({ 
@@ -175,6 +171,8 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather, refetchEvents }) 
     }
     
     if (!clicked) return null
+
+    // Remove notification badges for this user if event is opened
     if (clicked) removeNotifications({
         variables: {
             eventId: id

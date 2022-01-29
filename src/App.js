@@ -6,7 +6,7 @@ import Login from './components/Login/Login'
 
 const App = () => {
   const [cookies] = useCookies(['userToken'])
-
+  console.log(cookies)
   if (!cookies.userToken) return <Login />
 
   return (

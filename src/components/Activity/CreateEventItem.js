@@ -15,12 +15,10 @@ import ForbiddenError from '../Errors/ForbiddenError'
 import { CREATE_EVENT_ITEM } from '../../utils/mutations'
 
 const CreateEventItem = ({ clicked, setClicked, familyID }) => {
-    const [fail, setFail] = useState()
     const [galleryClicked, setGalleryClicked] = useState(false)
     const [imgUrl, setImgUrl] = useState('/activities/image38.jpg')
     const [createEventItem, { loading, error }] = useMutation(CREATE_EVENT_ITEM, {
         onCompleted: () => setClicked(false),
-        onError: () => setFail(true)
     })
 
     if (!clicked) return null

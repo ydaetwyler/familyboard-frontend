@@ -115,7 +115,7 @@ export const validateEvent = Yup.object({
         .matches(/^[A-Za-z\x7f-\xff0-9 _]*[A-Za-z\x7f-\xff0-9][A-Za-z\x7f-\xff0-9 _]*$/, 'Only alphates and numbers are allowed'),
     activityUrl: Yup.string()
         .trim()
-        .max(50, 'Must be 50 characters or less')
+        .max(80, 'Must be 80 characters or less')
         .test("is-url-valid", "URL is not valid", value => value ? isValidUrl(value) : true)
 })
 
@@ -123,5 +123,5 @@ export const validateComment = Yup.object({
     commentText: Yup.string()
         .trim()
         .required('')
-        .max(75, 'Must be 75 characters or less')
+        .max(100, 'Must be 100 characters or less')
 })

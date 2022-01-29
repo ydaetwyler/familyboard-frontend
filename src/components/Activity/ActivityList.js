@@ -35,6 +35,7 @@ const ActivityList = ({ familyID }) => {
     const [events, setEvents] = useState([])
     const [togglePast, setTogglePast] = useState(false)
 
+    // Events will be separated due to filter function "past events", therefore events are loaded into initial state first
     useEffect(() => {
         if (data) {
             setInitialEvents(data.getFamily.eventList)
@@ -54,6 +55,8 @@ const ActivityList = ({ familyID }) => {
         })
     }, [])
 
+    // Transform event date to use it for filter calculation
+    // + 1 because today is not past yet
     const parseActivityDate = (date) => {
         const dateToChange = new Date(date)
         const plusOneDate = new Date(dateToChange.setDate(dateToChange.getDate() + 1))

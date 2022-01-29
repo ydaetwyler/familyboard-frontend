@@ -20,6 +20,7 @@ const GET_EVENT_COMMENT = gql`
     }
 `
 
+// We check this by query because we never want to have the user Id's returned by the backend (security)
 const CHECK_COMMENT_OWNER = gql`
     query checkCommentOwner($_id: ID!) {
         checkCommentOwner(_id: $_id)
@@ -27,7 +28,6 @@ const CHECK_COMMENT_OWNER = gql`
 `
 
 const EventComments = ({ id, eventId }) => {
-    const [fail, setFail] = useState()
     const [isCommentOwner, setIsCommentOwner] = useState(false)
     const { loading, error, data, refetch, subscribeToMore } = useQuery(GET_EVENT_COMMENT, {
         variables: { _id: id }
@@ -35,9 +35,7 @@ const EventComments = ({ id, eventId }) => {
     const { loading: checkCommentOwnerLoading, error: checkCommentOwnerError, data: checkCommentOwnerData, refetch: checkCommentOwnerRefetch, subscribeToMore: checkCommentOwnerSubscribeToMore } = useQuery(CHECK_COMMENT_OWNER, {
         variables: { _id: id }
     })
-    const [removeEventComment, {loading: removeEventCommentLoading, error: removeEventCommentError}] = useMutation(REMOVE_EVENT_COMMENT, {
-        onError: () => setFail(true)
-    })
+    const [removeEventComment, {loading: removeEventCommentLoading, error: removeEventCommentError}] = useMutation(REMOVE_EVENT_COMMENT)
 
     useEffect(() => {
         if (checkCommentOwnerData) 

@@ -19,8 +19,11 @@ const Weather = ({ id, dateDiff, coordinates, lastCall, savedIcon, savedTemp }) 
 
     const apiKey = process.env.REACT_APP_OPENWEATHER_KEY
     const weatherUrl = 'https://api.openweathermap.org/data/2.5/onecall?'
+
+    // Check if event is today, if yes we use the current weather data and not the next 7 days
     const exclude = (dateDiff < 1) ? 'minutely,hourly,daily,alerts' : 'current,minutely,hourly,alerts'
 
+    // To save requests in the free plan we only call the api after 6h for this event again (weather is saved to DB)
     const hoursDiffCalc = (dateNow, dateStringLastCall) => {
         const dateLastCall = new Date(dateStringLastCall)
         let diff = (dateNow.getTime() - dateLastCall.getTime()) / 1000
@@ -39,6 +42,7 @@ const Weather = ({ id, dateDiff, coordinates, lastCall, savedIcon, savedTemp }) 
     useEffect(() => {
         if (hoursDiff && coordinates) {
             if (hoursDiff >= 6) {
+                // lat & lon are stored in a string - transform to array to split it to two variables afterwards
                 const coordinatesArr = coordinates.split(',')
                 const lat = coordinatesArr[0]
                 const lon = coordinatesArr[1]
@@ -56,6 +60,7 @@ const Weather = ({ id, dateDiff, coordinates, lastCall, savedIcon, savedTemp }) 
         
     }, [hoursDiff, coordinates])
 
+    // Set states with weather data and call mutation in next useEffect
     useEffect(() => {
         if (weatherData) {
             setIcon(`http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`)

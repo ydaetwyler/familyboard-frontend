@@ -33,6 +33,7 @@ const Family = ({ familyID }) => {
     const { loading, error, data, subscribeToMore } = useQuery(GET_FAMILY)
     const [clicked, setClicked] = useState(false)
 
+    // Besides other subscriptions we actually subscribe to the changed family item (not refetching)
     useEffect(() => {
         subscribeToMore({
             document: FAMILY_SUBSCRIPTION,

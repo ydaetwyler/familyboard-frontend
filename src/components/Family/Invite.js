@@ -10,11 +10,7 @@ import AuthError from '../Errors/AuthError'
 import ForbiddenError from '../Errors/ForbiddenError'
 
 const Invite = ({ familyID }) => {
-    const [fail, setFail] = useState(false)
-
-    const [invite, { loading, error }] = useMutation(INVITE, {
-        onError: () => setFail(true)
-    })
+    const [invite, { loading, error }] = useMutation(INVITE)
 
     if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
     

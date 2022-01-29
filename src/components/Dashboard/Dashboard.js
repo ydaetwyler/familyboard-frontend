@@ -21,10 +21,12 @@ const GET_FAMILY = gql`
 
 const Dashboard = () => {
     const { loading, error, data } = useQuery(GET_FAMILY)
+    // setCookie must be defined even we won't use it - otherwise it's broken
     const [cookies, setCookie, removeCookie] = useCookies(['userToken'])
     const [bgSelection, setBgSelection] = useState(null)
     const [selectBg, { loading: setBgLoading, error: setBgError }] = useMutation(SELECT_BG)
 
+    // value & label saved seperatly to use in select
     useEffect(() => {
         if (bgSelection) {
             if (bgSelection.value && bgSelection.label) {
@@ -58,6 +60,7 @@ const Dashboard = () => {
         }
     }
 
+    // Otherwise hash (new family first login, join family or pw reset) stays present
     window.history.replaceState(null, "Dashboard", "/")
 
     const handleLogout = () => {

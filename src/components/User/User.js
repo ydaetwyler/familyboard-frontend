@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import UpdateUser from './UpdateUser'
+import AuthError from '../Errors/AuthError'
+import ForbiddenError from '../Errors/ForbiddenError'
 
 const GET_USER = gql`
     query GetUser {

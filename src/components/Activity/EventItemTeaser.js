@@ -116,6 +116,7 @@ const EventItemTeaser = ({ eventId }) => {
     })
     const [setCoordinates] = useMutation(SET_COORDINATES)
 
+    // Besides other subscriptions we actually subscribe to the changed event item (not refetching)
     useEffect(() => {
         subscribeToMore({
             document: EVENT_ITEM_SUBSCRIPTION,
@@ -171,6 +172,7 @@ const EventItemTeaser = ({ eventId }) => {
         })
     }, [])
 
+    // dateDiff will be used to only make weather api calls if there already is a forecast available and to choose the type of call
     useEffect(() => {
         if (data) {
             const eventDate = new Date(data.getEventItem.activityDate)
@@ -183,6 +185,8 @@ const EventItemTeaser = ({ eventId }) => {
     const apiKey = process.env.REACT_APP_OPENWEATHER_KEY
     const locationUrl = 'http://api.openweathermap.org/geo/1.0/direct?q='
 
+    // First we need the coordinates to get the weather afterwards
+    // If the city can't be found, "activityApiCityNotFound: true" is returned to prohibit further weather & coordinates api calls (until the city value is changed)
     useEffect(() => {
         if (data) {
             if (getCoordinatesData) {
