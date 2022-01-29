@@ -18,7 +18,7 @@ const UserAccessForm = () => {
             maxAge: (60*60*24),
             secure: false,
             domain: (process.env.REACT_APP_ENV == 'local') ? "localhost" : "family-board.ch",
-            sameSite: 'strict',
+            sameSite: true,
             httpOnly: true
         }),
         onError: () => {
