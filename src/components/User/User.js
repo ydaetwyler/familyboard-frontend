@@ -30,7 +30,11 @@ const User = ({ setBg, bg }) => {
     }, [data])
 
     if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
-    if (error) return `Error -> ${error}`
+    
+    if (error.errors) {
+        if (error.errors[0].extensions.code == 'UNAUTHENTICATED') return <AuthError />
+        if (error.errors[0].extensions.code == 'FORBIDDEN') return <ForbiddenError />
+    }
 
     return (
         <div>

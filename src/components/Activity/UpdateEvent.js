@@ -182,11 +182,13 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather, refetchEvents }) 
     })
 
     if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
-    if (error || errorUpdateEvent) {
+    if (error.errors || errorUpdateEvent.errors || getEventCommentsError.errors) {
         if (
             error.errors[0].extensions.code == 'UNAUTHENTICATED'
             ||
             errorUpdateEvent.errors[0].extensions.code == 'UNAUTHENTICATED'
+            ||
+            getEventCommentsError.errors[0].extensions.code == 'UNAUTHENTICATED'
         ) {
             return <AuthError />
         }
@@ -194,6 +196,8 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather, refetchEvents }) 
             error.errors[0].extensions.code == 'FORBIDDEN'
             ||
             errorUpdateEvent.errors[0].extensions.code == 'FORBIDDEN'
+            ||
+            getEventCommentsError.errors[0].extensions.code == 'FORBIDDEN'
         ) {
             return <ForbiddenError />
         }

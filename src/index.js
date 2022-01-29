@@ -31,6 +31,7 @@ const wsLink = new WebSocketLink({
   }
 })
 
+// Manage use of http or ws as needed
 const splitLink = split(
   ({ query }) => {
     const definition = getMainDefinition(query)
@@ -48,6 +49,7 @@ const client = new ApolloClient({
   link: splitLink
 })
 
+// Surround App with Apollo & Cookie provider
 ReactDOM.render(
   <ApolloProvider client={client}>
     <CookiesProvider>

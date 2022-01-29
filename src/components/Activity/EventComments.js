@@ -57,7 +57,7 @@ const EventComments = ({ id, eventId }) => {
 
     if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
 
-    if (error || checkCommentOwnerError || removeEventCommentError) {
+    if (error.errors || checkCommentOwnerError.errors || removeEventCommentError.errors) {
         if (
             error.errors[0].extensions.code == 'UNAUTHENTICATED'
             ||

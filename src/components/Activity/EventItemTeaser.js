@@ -215,7 +215,7 @@ const EventItemTeaser = ({ eventId }) => {
 
     if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
 
-    if (error || getWeatherError || getCoordinatesError) {
+    if (error.errors || getWeatherError.errors || getCoordinatesError.errors) {
         if (
             error.errors[0].extensions.code == 'UNAUTHENTICATED'
             ||

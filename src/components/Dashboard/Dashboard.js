@@ -41,7 +41,7 @@ const Dashboard = () => {
     if (!cookies.userToken) return <Login />
 
     if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
-    if (error || setBgError) {
+    if (error.errors || setBgError.errors) {
         if (
             error.errors[0].extensions.code == 'UNAUTHENTICATED'
             ||
