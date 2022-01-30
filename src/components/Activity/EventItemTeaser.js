@@ -25,7 +25,8 @@ const GET_EVENT_ITEM = gql`
             activityUrl,
             userJoined,
             updated,
-            newComment
+            newComment,
+            activityApiLastCall,
         }
     }
 `
@@ -47,7 +48,6 @@ const EVENT_ITEM_SUBSCRIPTION = gql`
 const GET_WEATHER = gql`
     query GetWeather($_id: ID!) {
         getWeather(_id: $_id) {
-            activityApiLastCall,
             activityWeatherIcon,
             activityWeatherTemp,
             activityWeatherDesc,
@@ -104,6 +104,7 @@ const EventItemTeaser = ({ eventId }) => {
     const [dateDiff, setDateDiff] = useState()
     const [currentDate] = useState(new Date())
     const [clicked, setClicked] = useState(false)
+    const [weatherData, setWeatherData] = useState()
     const { loading, error, data, refetch, subscribeToMore } = useQuery(GET_EVENT_ITEM, {
         variables: { _id: eventId }
     })
@@ -174,6 +175,10 @@ const EventItemTeaser = ({ eventId }) => {
                 }, 500);
             }
         })
+    }, [])
+
+    useEffect(() => {
+        if (getWeatherData) setWeatherData(getWeatherData)
     }, [])
 
     // dateDiff will be used to only make weather api calls if there already is a forecast available and to choose the type of call
@@ -390,7 +395,7 @@ const EventItemTeaser = ({ eventId }) => {
                             id={eventId}
                             dateDiff={dateDiff} 
                             coordinates={getCoordinatesData ? getCoordinatesData.getCoordinates.activityCoordinates : null}
-                            lastCall={getWeatherData ? getWeatherData.getWeather.activityApiLastCall : null}
+                            lastCall={data ? data.getEventItem.activityApiLastCall : new Date(Date.now())}
                             savedIcon={getWeatherData ? getWeatherData.getWeather.activityWeatherIcon : null}
                             savedTemp={getWeatherData ? getWeatherData.getWeather.activityWeatherTemp : null}
                         />

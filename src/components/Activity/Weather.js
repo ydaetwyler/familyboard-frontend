@@ -28,20 +28,22 @@ const Weather = ({ id, dateDiff, coordinates, lastCall, savedIcon, savedTemp }) 
         const dateLastCall = new Date(dateStringLastCall)
         let diff = (dateNow.getTime() - dateLastCall.getTime()) / 1000
         diff /= (60 * 60)
+        console.log(Math.abs(Math.round(diff)))
         return Math.abs(Math.round(diff))
     }
 
     useEffect(() => {
+        console.log(lastCall)
         if (lastCall) {
             setHoursDiff(hoursDiffCalc(currentTime, lastCall))
-        } else {
-            setHoursDiff(99)
-        }
+        } 
     }, [])
 
     useEffect(() => {
         if (hoursDiff && coordinates) {
             if (hoursDiff >= 6) {
+                console.log(hoursDiff)
+                console.log(id)
                 // lat & lon are stored in a string - transform to array to split it to two variables afterwards
                 const coordinatesArr = coordinates.split(',')
                 const lat = coordinatesArr[0]
