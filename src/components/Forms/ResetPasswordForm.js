@@ -10,18 +10,14 @@ import { validateResetPassword } from './Utils/validations'
 
 const ResetPasswordForm = () => {
     const [userHash] = useState(useParams().hash)
-    const [cookies, setCookie] = useCookies(['userToken'])
-    const [fail, setFail] = useState(false)
+    const [cookies, setCookie] = useCookies(['accessGranted'])
     const [resetPassword, { loading, error }] = useMutation(RESET_PASSWORD, {
-        onCompleted: (data) => setCookie('userToken', data.resetPassword, { 
+        onCompleted: (data) => setCookie('accessGranted', true, { 
             path: "/",
             maxAge: (60*60*24),
             secure: false,
             domain: (process.env.REACT_APP_ENV == 'local') ? "localhost" : "family-board.ch",
-            sameSite: true,
-            httpOnly: true
-        }),
-        onError: () => setFail(true)
+        })
     })
 
     return (

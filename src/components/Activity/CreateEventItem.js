@@ -9,8 +9,7 @@ import TextInput from '../Forms/Utils/TextInput'
 import TextArea from '../Forms/Utils/TextArea'
 import { validateEvent } from '../Forms/Utils/validations'
 
-import AuthError from '../Errors/AuthError'
-import ForbiddenError from '../Errors/ForbiddenError'
+import CheckError from '../Errors/CheckError'
 
 import { CREATE_EVENT_ITEM } from '../../utils/mutations'
 
@@ -18,17 +17,14 @@ const CreateEventItem = ({ clicked, setClicked, familyID }) => {
     const [galleryClicked, setGalleryClicked] = useState(false)
     const [imgUrl, setImgUrl] = useState('/activities/image38.jpg')
     const [createEventItem, { loading, error }] = useMutation(CREATE_EVENT_ITEM, {
-        onCompleted: () => setClicked(false),
+        onCompleted: () => setClicked(false)
     })
 
     if (!clicked) return null
 
     if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
-    
-    if (error.errors) {
-        if (error.errors[0].extensions.code == 'UNAUTHENTICATED') return <AuthError />
-        if (error.errors[0].extensions.code == 'FORBIDDEN') return <ForbiddenError />
-    }
+
+    if (error) return <CheckError error={error} />
 
     return (
         <div>

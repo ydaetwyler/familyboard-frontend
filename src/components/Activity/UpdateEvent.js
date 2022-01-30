@@ -12,8 +12,7 @@ import WeatherForecast from './WeatherForecast'
 import AddEventComment from './AddEventComment'
 import UserOverview from '../User/UserOverview'
 
-import AuthError from '../Errors/AuthError'
-import ForbiddenError from '../Errors/ForbiddenError'
+import CheckError from '../Errors/CheckError'
 
 import TextInput from '../Forms/Utils/TextInput'
 import TextArea from '../Forms/Utils/TextArea'
@@ -116,9 +115,11 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather, refetchEvents }) 
             variables: { _id: id },
             updateQuery: (prev, { subscriptionData }) => {
                 if (!subscriptionData.data) return prev
-                
-                refetch()
-                return prev
+
+                setTimeout(() => {
+                    refetch()
+                    return prev
+                }, 500);
             }
         })
     }, [])
@@ -129,10 +130,11 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather, refetchEvents }) 
             variables: { _id: id },
             updateQuery: (prev, { subscriptionData }) => {
                 if (!subscriptionData.data) return prev
-                
-                getEventCommentsRefetch()
 
-                return prev
+                setTimeout(() => {
+                    getEventCommentsRefetch()
+                    return prev
+                }, 500);
             }
         })
     }, [])
@@ -180,26 +182,10 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather, refetchEvents }) 
     })
 
     if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
-    if (error.errors || errorUpdateEvent.errors || getEventCommentsError.errors) {
-        if (
-            error.errors[0].extensions.code == 'UNAUTHENTICATED'
-            ||
-            errorUpdateEvent.errors[0].extensions.code == 'UNAUTHENTICATED'
-            ||
-            getEventCommentsError.errors[0].extensions.code == 'UNAUTHENTICATED'
-        ) {
-            return <AuthError />
-        }
-        if (
-            error.errors[0].extensions.code == 'FORBIDDEN'
-            ||
-            errorUpdateEvent.errors[0].extensions.code == 'FORBIDDEN'
-            ||
-            getEventCommentsError.errors[0].extensions.code == 'FORBIDDEN'
-        ) {
-            return <ForbiddenError />
-        }
-    }
+
+    if (error) return <CheckError error={error} />
+    if (errorUpdateEvent) return <CheckError error={errorUpdateEvent} />
+    if (getEventCommentsError) return <CheckError error={getEventCommentsError} />
 
     return (
         <div>

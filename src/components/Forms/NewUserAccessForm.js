@@ -11,18 +11,16 @@ import { validateNewUserAccess } from './Utils/validations'
 
 const NewUserAccessForm = () => {
     const [userHash] = useState(useParams().hash)
-    const [cookies, setCookie] = useCookies(['userToken'])
+    const [cookies, setCookie] = useCookies(['accessGranted'])
     const [emojis, setEmojis] = useState([])
     const [selectEmoji, setSelectEmoji] = useState('/openmoji/emoji49.png')
     const [fail, setFail] = useState(false)
     const [signUp, { loading, error }] = useMutation(SIGN_UP, {
-        onCompleted: (data) => setCookie('userToken', data.signUp, { 
+        onCompleted: (data) => setCookie('accessGranted', true, { 
             path: "/",
             maxAge: (60*60*24),
             secure: false,
             domain: (process.env.REACT_APP_ENV == 'local') ? "localhost" : "family-board.ch",
-            sameSite: true,
-            httpOnly: true
         }),
         onError: () => setFail(true)
     })

@@ -5,8 +5,7 @@ import Toggle from 'react-toggle'
 import AddEventItem from './AddEventItem'
 import EventItemTeaser from './EventItemTeaser'
 
-import AuthError from '../Errors/AuthError'
-import ForbiddenError from '../Errors/ForbiddenError'
+import CheckError from '../Errors/CheckError'
 
 const GET_ACTIVITIES = gql`
     query GetFamily {
@@ -49,8 +48,10 @@ const ActivityList = ({ familyID }) => {
             updateQuery: (prev, { subscriptionData }) => {
                 if (!subscriptionData.data) return prev
 
-                refetch()
-                return prev
+                setTimeout(() => {
+                    refetch()
+                    return prev
+                }, 500);
             }
         })
     }, [])
@@ -81,10 +82,7 @@ const ActivityList = ({ familyID }) => {
 
     if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
     
-    if (error.errors) {
-        if (error.errors[0].extensions.code == 'UNAUTHENTICATED') return <AuthError />
-        if (error.errors[0].extensions.code == 'FORBIDDEN') return <ForbiddenError />
-    }
+    if (error) return <CheckError error={error} />
 
     return (
         <div className="mt-20 flex flex-row flex-wrap justify-evenly">

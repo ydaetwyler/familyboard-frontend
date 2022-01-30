@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import UpdateUser from './UpdateUser'
-import AuthError from '../Errors/AuthError'
-import ForbiddenError from '../Errors/ForbiddenError'
+import CheckError from '../Errors/CheckError'
 
 const GET_USER = gql`
     query GetUser {
@@ -32,11 +31,8 @@ const User = ({ setBg, bg }) => {
     }, [data])
 
     if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
-    
-    if (error.errors) {
-        if (error.errors[0].extensions.code == 'UNAUTHENTICATED') return <AuthError />
-        if (error.errors[0].extensions.code == 'FORBIDDEN') return <ForbiddenError />
-    }
+
+    if (error) return <CheckError error={error} />
 
     return (
         <div>

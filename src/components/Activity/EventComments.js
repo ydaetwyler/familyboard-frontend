@@ -5,8 +5,7 @@ import { getExtraShortDate, getTime } from '../../utils/dateHelpers.js'
 
 import { REMOVE_EVENT_COMMENT } from '../../utils/mutations'
 
-import AuthError from '../Errors/AuthError'
-import ForbiddenError from '../Errors/ForbiddenError'
+import CheckError from '../Errors/CheckError'
 
 const GET_EVENT_COMMENT = gql`
     query GetEventComment($_id: ID!) {
@@ -55,26 +54,9 @@ const EventComments = ({ id, eventId }) => {
 
     if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
 
-    if (error.errors || checkCommentOwnerError.errors || removeEventCommentError.errors) {
-        if (
-            error.errors[0].extensions.code == 'UNAUTHENTICATED'
-            ||
-            checkCommentOwnerError.errors[0].extensions.code == 'UNAUTHENTICATED'
-            ||
-            removeEventCommentError.errors[0].extensions.code == 'UNAUTHENTICATED'
-        ) {
-            return <AuthError />
-        }
-        if (
-            error.errors[0].extensions.code == 'FORBIDDEN'
-            ||
-            checkCommentOwnerError.errors[0].extensions.code == 'FORBIDDEN'
-            ||
-            removeEventCommentError.errors[0].extensions.code == 'FORBIDDEN'
-        ) {
-            return <ForbiddenError />
-        }
-    }
+    if (error) return <CheckError error={error} />
+    if (checkCommentOwnerError) return <CheckError error={checkCommentOwnerError} />
+    if (removeEventCommentError) return <CheckError error={removeEventCommentError} />
 
     return (
         <div>

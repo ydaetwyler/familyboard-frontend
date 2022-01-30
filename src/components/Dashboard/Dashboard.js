@@ -6,8 +6,7 @@ import Family from '../Family/Family'
 import User from '../User/User'
 import ActivityList from '../Activity/ActivityList'
 
-import AuthError from '../Errors/AuthError'
-import ForbiddenError from '../Errors/ForbiddenError'
+import CheckError from '../Errors/CheckError'
 
 import { SELECT_BG } from '../../utils/mutations'
 
@@ -22,7 +21,7 @@ const GET_FAMILY = gql`
 const Dashboard = () => {
     const { loading, error, data } = useQuery(GET_FAMILY)
     // setCookie must be defined even we won't use it - otherwise it's broken
-    const [cookies, setCookie, removeCookie] = useCookies(['userToken'])
+    const [cookies, setCookie, removeCookie] = useCookies(['accessGranted'])
     const [bgSelection, setBgSelection] = useState(null)
     const [selectBg, { loading: setBgLoading, error: setBgError }] = useMutation(SELECT_BG)
 
@@ -40,31 +39,17 @@ const Dashboard = () => {
         }
     }, [bgSelection])
 
-    if (!cookies.userToken) return <Login />
+    if (!cookies.accessGranted) return <Login />
 
     if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
-    if (error.errors || setBgError.errors) {
-        if (
-            error.errors[0].extensions.code == 'UNAUTHENTICATED'
-            ||
-            setBgError.errors[0].extensions.code == 'UNAUTHENTICATED'
-        ) {
-            return <AuthError />
-        }
-        if (
-            error.errors[0].extensions.code == 'FORBIDDEN'
-            ||
-            setBgError.errors[0].extensions.code == 'FORBIDDEN'
-        ) {
-            return <ForbiddenError />
-        }
-    }
+    if (error) return <CheckError error={error} />
+    if (setBgError) return <CheckError error={setBgError} />
 
     // Otherwise hash (new family first login, join family or pw reset) stays present
     window.history.replaceState(null, "Dashboard", "/")
 
     const handleLogout = () => {
-        removeCookie('userToken')
+        removeCookie('accessGranted')
     } 
 
     return (

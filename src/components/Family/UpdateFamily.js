@@ -5,8 +5,7 @@ import { Formik, Form } from 'formik'
 import Invite from './Invite'
 import UserOverview from '../User/UserOverview'
 
-import AuthError from '../Errors/AuthError'
-import ForbiddenError from '../Errors/ForbiddenError'
+import CheckError from '../Errors/CheckError'
 
 import TextInput from '../Forms/Utils/TextInput'
 import { UPDATE_FAMILY } from '../../utils/mutations'
@@ -45,10 +44,7 @@ const UpdateFamily = ({ familyID, clicked, setClicked, initialFamily, initialAva
 
     if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
     
-    if (error.errors) {
-        if (error.errors[0].extensions.code == 'UNAUTHENTICATED') return <AuthError />
-        if (error.errors[0].extensions.code == 'FORBIDDEN') return <ForbiddenError />
-    }
+    if (error) return <CheckError error={error} />
 
     if (!clicked) return null
 

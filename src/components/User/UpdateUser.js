@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { gql, useMutation } from '@apollo/client'
 import { Formik, Form } from 'formik'
 import Select from 'react-select'
-import AuthError from '../Errors/AuthError'
-import ForbiddenError from '../Errors/ForbiddenError'
+import CheckError from '../Errors/CheckError'
 
 import TextInput from '../Forms/Utils/TextInput'
 import { UPDATE_USER } from '../../utils/mutations'
@@ -27,7 +26,6 @@ const optionsBackground = [
 const UpdateUser = ({ clicked, setClicked, initialUser, initialAvatar, setBg, bg }) => {
     const [emojis, setEmojis] = useState([])
     const [selectEmoji, setSelectEmoji] = useState(initialAvatar)
-    const [fail, setFail] = useState(false)
     
     const [updateUser, { loading, error }] = useMutation(UPDATE_USER, {
         update: (cache, { data }) => {
@@ -42,8 +40,7 @@ const UpdateUser = ({ clicked, setClicked, initialUser, initialAvatar, setBg, bg
                 }
             })
         },
-        onCompleted: () => setClicked(false),
-        onError: () => setFail(true)
+        onCompleted: () => setClicked(false)
     })
 
     const getEmojis = () => {
@@ -71,10 +68,7 @@ const UpdateUser = ({ clicked, setClicked, initialUser, initialAvatar, setBg, bg
 
     if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
     
-    if (error.errors) {
-        if (error.errors[0].extensions.code == 'UNAUTHENTICATED') return <AuthError />
-        if (error.errors[0].extensions.code == 'FORBIDDEN') return <ForbiddenError />
-    }
+    if (error) return <CheckError error={error} />
 
     if (!clicked) return null
 

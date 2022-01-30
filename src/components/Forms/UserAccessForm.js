@@ -9,20 +9,16 @@ import { SIGN_IN } from '../../utils/mutations'
 import { validateUserAccess } from './Utils/validations'
 
 const UserAccessForm = () => {
-    const [cookies, setCookie, removeCookie] = useCookies(['userToken', 'accessControl'])
+    const [cookies, setCookie, removeCookie] = useCookies(['accessGranted', 'accessControl'])
     const [errorCounter, setErrorCounter] = useState(0)
     const [counter, setCounter] = useState(0)
     const [signIn, { loading, error }] = useMutation(SIGN_IN, { 
-        onCompleted: () => console.log('hallo'),
-        /*
-        onCompleted: (data) => setCookie('userToken', data.signIn, {
+        onCompleted: () => setCookie('accessGranted', true, {
             path: "/",
             maxAge: (60*60*24),
             secure: false,
             domain: (process.env.REACT_APP_ENV == 'local') ? "localhost" : "family-board.ch",
-            sameSite: true,
-            httpOnly: true
-        }), */
+        }),
         onError: () => {
             setErrorCounter(errorCounter + 1)
             setCounter(30)

@@ -3,10 +3,10 @@ import { useCookies } from 'react-cookie'
 
 const AuthError = () => {
     // cookies & setCookie must be defined even we won't use it - otherwise it's broken
-    const [cookies, setCookie, removeCookie] = useCookies(['userToken'])
+    const [cookies, setCookie, removeCookie] = useCookies(['accessGranted'])
 
     const handleLogout = () => {
-        removeCookie('userToken')
+        removeCookie('accessGranted')
     } 
 
     return (

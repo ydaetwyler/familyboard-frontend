@@ -5,9 +5,9 @@ import Dashboard from './components/Dashboard/Dashboard'
 import Login from './components/Login/Login'
 
 const App = () => {
-  const [cookies] = useCookies(['userToken'])
-  console.log(cookies)
-  if (!cookies.userToken) return <Login />
+  const [cookies] = useCookies(['accessGranted'])
+
+  if (!cookies.accessGranted) return <Login />
 
   return (
     <div>

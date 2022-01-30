@@ -11,8 +11,7 @@ import JoinedBadge from './JoinedBadge'
 import UpdateBadge from './UpdateBadge'
 import NewCommentBadge from './NewCommentBadge'
 
-import AuthError from '../Errors/AuthError'
-import ForbiddenError from '../Errors/ForbiddenError'
+import CheckError from '../Errors/CheckError'
 
 const GET_EVENT_ITEM = gql`
     query GetEventItem($_id: ID!) {
@@ -139,8 +138,10 @@ const EventItemTeaser = ({ eventId }) => {
             updateQuery: (prev, { subscriptionData }) => {
                 if (!subscriptionData.data) return prev
 
-                getWeatherRefetch()
-                return prev
+                setTimeout(() => {
+                    getWeatherRefetch()
+                    return prev
+                }, 500);
             }
         })
     }, [])
@@ -151,9 +152,11 @@ const EventItemTeaser = ({ eventId }) => {
             variables: { _id: eventId },
             updateQuery: (prev, { subscriptionData }) => {
                 if (!subscriptionData.data) return prev
-                
-                getCoordinatesRefetch()
-                return prev
+
+                setTimeout(() => {
+                    getCoordinatesRefetch()
+                    return prev
+                }, 500);
             }
         })
     }, [])
@@ -165,9 +168,10 @@ const EventItemTeaser = ({ eventId }) => {
             updateQuery: (prev, { subscriptionData }) => {
                 if (!subscriptionData.data) return prev
                 
-                refetch()
-
-                return prev
+                setTimeout(() => {
+                    refetch()
+                    return prev
+                }, 500);
             }
         })
     }, [])
@@ -219,26 +223,9 @@ const EventItemTeaser = ({ eventId }) => {
 
     if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
 
-    if (error.errors || getWeatherError.errors || getCoordinatesError.errors) {
-        if (
-            error.errors[0].extensions.code == 'UNAUTHENTICATED'
-            ||
-            getWeatherError.errors[0].extensions.code == 'UNAUTHENTICATED'
-            ||
-            getCoordinatesError.errors[0].extensions.code == 'UNAUTHENTICATED'
-        ) {
-            return <AuthError />
-        }
-        if (
-            error.errors[0].extensions.code == 'FORBIDDEN'
-            ||
-            getWeatherError.errors[0].extensions.code == 'FORBIDDEN'
-            ||
-            getCoordinatesError.errors[0].extensions.code == 'FORBIDDEN'
-        ) {
-            return <ForbiddenError />
-        }
-    }
+    if (error) return <CheckError error={error} />
+    if (getWeatherError) return <CheckError error={getWeatherError} />
+    if (getCoordinatesError) return <CheckError error={getCoordinatesError} />
 
     if (dateDiff > 7 && !data.getEventItem.activityApiCityNotFound) {
         return (
