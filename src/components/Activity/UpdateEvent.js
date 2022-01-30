@@ -310,7 +310,7 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather, refetchEvents }) 
                         <span className="ml-3 text-white text-sm font-medium">Join activity</span>
                     </label>
                     <h4 className="block text-xl font-medium text-gray-300">Participants</h4>
-                    <div className="flex flex-row overflow-x-scroll mt-3 mb-9">
+                    <div className="flex flex-row flex-wrap overflow-x-scroll mt-3 mb-9">
                         {participants ? participants.map((member) =>  
                         <UserOverview 
                             key={member.userName} 

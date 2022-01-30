@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useMutation } from '@apollo/client'
 import { useParams } from 'react-router-dom'
-import { useCookies } from 'react-cookie'
 import { Formik, Form } from 'formik'
 
 import TextInput from './Utils/TextInput'
@@ -10,14 +9,11 @@ import { validateResetPassword } from './Utils/validations'
 
 const ResetPasswordForm = () => {
     const [userHash] = useState(useParams().hash)
-    const [cookies, setCookie] = useCookies(['accessGranted'])
     const [resetPassword, { loading, error }] = useMutation(RESET_PASSWORD, {
-        onCompleted: (data) => setCookie('accessGranted', true, { 
-            path: "/",
-            maxAge: (60*60*24),
-            secure: false,
-            domain: (process.env.REACT_APP_ENV == 'local') ? "localhost" : "family-board.ch",
-        })
+        onCompleted: () => {
+            localStorage.setItem('accessGranted', 'yes')
+            window.location.reload()
+        }
     })
 
     return (

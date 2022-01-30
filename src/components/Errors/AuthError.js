@@ -1,12 +1,9 @@
 import React from 'react'
-import { useCookies } from 'react-cookie'
 
 const AuthError = () => {
-    // cookies & setCookie must be defined even we won't use it - otherwise it's broken
-    const [cookies, setCookie, removeCookie] = useCookies(['accessGranted'])
-
     const handleLogout = () => {
-        removeCookie('accessGranted', {path: '/'})
+        localStorage.removeItem('accessGranted')
+        window.location.reload()
     } 
 
     return (

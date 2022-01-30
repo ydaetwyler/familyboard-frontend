@@ -85,8 +85,8 @@ const ActivityList = ({ familyID }) => {
     if (error) return <CheckError error={error} />
 
     return (
-        <div className="mt-20 flex flex-row flex-wrap justify-evenly">
-            <label className="mx-auto absolute top-20 flex items-center cursor-pointer mb-4">
+        <>
+            <label className="ml-40 mt-24 flex items-center cursor-pointer z-50">
                 <Toggle 
                     onChange={toggleHistoryHandler} 
                     defaultChecked={false} 
@@ -94,15 +94,17 @@ const ActivityList = ({ familyID }) => {
                 />
                 <span className="ml-3 text-white text-sm font-medium">Show past events</span>
             </label>
-            {!togglePast ? <AddEventItem familyID={familyID} /> : null}
-            {events.map((item) => {
-                return <EventItemTeaser 
-                            key={item._id}
-                            eventId={item._id}
-                            familyID={familyID} 
-                        />
-            })}
-        </div>
+            <div className="mt-20 flex flex-row flex-wrap justify-evenly">
+                {!togglePast ? <AddEventItem familyID={familyID} /> : null}
+                {events.map((item) => {
+                    return <EventItemTeaser 
+                                key={item._id}
+                                eventId={item._id}
+                                familyID={familyID} 
+                            />
+                })}
+            </div>
+        </>
     )
 }
 

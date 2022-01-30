@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useMutation } from '@apollo/client'
 import { useParams } from 'react-router-dom'
-import { useCookies } from 'react-cookie'
 import { Formik, Form } from 'formik'
 
 import TextInput from './Utils/TextInput'
@@ -11,18 +10,13 @@ import { validateNewUserAccess } from './Utils/validations'
 
 const NewUserAccessForm = () => {
     const [userHash] = useState(useParams().hash)
-    const [cookies, setCookie] = useCookies(['accessGranted'])
     const [emojis, setEmojis] = useState([])
     const [selectEmoji, setSelectEmoji] = useState('/openmoji/emoji49.png')
-    const [fail, setFail] = useState(false)
     const [signUp, { loading, error }] = useMutation(SIGN_UP, {
-        onCompleted: (data) => setCookie('accessGranted', true, { 
-            path: "/",
-            maxAge: (60*60*24),
-            secure: false,
-            domain: (process.env.REACT_APP_ENV == 'local') ? "localhost" : "family-board.ch",
-        }),
-        onError: () => setFail(true)
+        onCompleted: () => {
+            localStorage.setItem('accessGranted', 'yes')
+            window.location.reload()
+        },
     })
 
     const getEmojis = () => {

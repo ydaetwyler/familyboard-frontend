@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { useCookies } from 'react-cookie'
 import { gql, useQuery, useMutation } from '@apollo/client'
 import Login from '../Login/Login'
 import Family from '../Family/Family'
@@ -21,7 +20,7 @@ const GET_FAMILY = gql`
 const Dashboard = () => {
     const { loading, error, data } = useQuery(GET_FAMILY)
     // setCookie must be defined even we won't use it - otherwise it's broken
-    const [cookies, setCookie, removeCookie] = useCookies(['accessGranted'])
+    const [access, setAccess] = useState()
     const [bgSelection, setBgSelection] = useState(null)
     const [selectBg, { loading: setBgLoading, error: setBgError }] = useMutation(SELECT_BG)
 
@@ -39,7 +38,7 @@ const Dashboard = () => {
         }
     }, [bgSelection])
 
-    if (!cookies.accessGranted) return <Login />
+    if (localStorage.getItem('accessGranted') != 'yes') return <Login />
 
     if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
     if (error) return <CheckError error={error} />
@@ -49,12 +48,13 @@ const Dashboard = () => {
     window.history.replaceState(null, "Dashboard", "/")
 
     const handleLogout = () => {
-        removeCookie('accessGranted', { path: '/' })
+        localStorage.removeItem('accessGranted')
+        window.location.reload()
     } 
 
     return (
         <div className={(bgSelection ? bgSelection.value : 'bg-clouds') + " w-full min-h-screen sm:h-[160vh] h-[200vh] overflow-x-hidden overflow-y-auto"}>
-            <div className="pt-2 pl-2 flex flex-row w-full justify-between">
+            <div className="pt-2 pl-2 fixed flex flex-row w-full justify-between z-50 pb-1 bg-white/[.1]">
                 <h1 className="text-2xl lg:text-4xl font-bold text-white font font-['Righteous']">Family Board</h1>
                 <div className="flex flex-row justify-between pr-5">
                     <User setBg={setBgSelection} bg={bgSelection} />
