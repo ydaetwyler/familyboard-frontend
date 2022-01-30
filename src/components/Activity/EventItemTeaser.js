@@ -231,7 +231,7 @@ const EventItemTeaser = ({ eventId }) => {
         return (
             <div className="mb-16">
                 <div className="relative shadow-md border rounded-lg max-w-xs bg-gray-800 border-gray-700 mx-8 font-['Mulish'] cursor-pointer" onClick={() => setClicked(true)}>
-                    <img className="rounded-t-lg h-[212px] w-full" src={data.getEventItem.activityImageUrl} />
+                    <img className="rounded-t-lg h-[212px] w-[318px]" src={data.getEventItem.activityImageUrl} />
                     {
                         data.getEventItem.userJoined 
                             ?  <JoinedBadge />
@@ -273,7 +273,7 @@ const EventItemTeaser = ({ eventId }) => {
         return (
             <div className="mb-16">
                 <div className="relative shadow-md border rounded-lg max-w-xs bg-gray-800 border-gray-700 mx-8 font-['Mulish'] cursor-pointer opacity-70" onClick={() => setClicked(true)}>
-                    <img className="rounded-t-lg h-[212px] w-full" src={data.getEventItem.activityImageUrl} />
+                    <img className="rounded-t-lg h-[212px] w-[318px]" src={data.getEventItem.activityImageUrl} />
                     {
                         data.getEventItem.userJoined 
                             ?  <JoinedBadge />
@@ -318,7 +318,7 @@ const EventItemTeaser = ({ eventId }) => {
         return (
             <div className="mb-16">
                 <div className="relative shadow-md border rounded-lg max-w-xs bg-gray-800 border-gray-700 mx-8 font-['Mulish'] cursor-pointer" onClick={() => setClicked(true)}>
-                    <img className="rounded-t-lg h-[212px] w-full" src={data.getEventItem.activityImageUrl} />
+                    <img className="rounded-t-lg h-[212px] w-[318px]" src={data.getEventItem.activityImageUrl} />
                     {
                         data.getEventItem.userJoined 
                             ?  <JoinedBadge />
@@ -360,7 +360,7 @@ const EventItemTeaser = ({ eventId }) => {
         return (
             <div className="mb-16">
                 <div className="relative shadow-md border rounded-lg max-w-xs bg-gray-800 border-gray-700 mx-8 font-['Mulish'] cursor-pointer" onClick={() => setClicked(true)}>
-                    <img className="rounded-t-lg h-[212px] w-full" src={data.getEventItem.activityImageUrl} />
+                    <img className="rounded-t-lg h-[212px] w-[318px]" src={data.getEventItem.activityImageUrl} />
                     {
                         data.getEventItem.userJoined 
                             ?  <JoinedBadge />
