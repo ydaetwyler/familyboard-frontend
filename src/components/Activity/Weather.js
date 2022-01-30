@@ -64,8 +64,9 @@ const Weather = ({ id, dateDiff, coordinates, lastCall, savedIcon, savedTemp }) 
     useEffect(() => {
         if (weatherData) {
             setIcon(`http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`)
+            console.log(weatherData)
             setTemp(`${
-                (dateDiff < 1)
+                (dateDiff > 1)
                     ?   Math.round(parseFloat(weatherData.temp.day))
                     :   Math.round(parseFloat(weatherData.temp))
             } °C`)
