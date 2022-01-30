@@ -115,6 +115,7 @@ const EventItemTeaser = ({ eventId }) => {
         variables: { _id: eventId }
     })
     const [setCoordinates] = useMutation(SET_COORDINATES)
+    const [newCoordinates, setNewCoordinates] = useState()
 
     // Besides other subscriptions we actually subscribe to the changed event item (not refetching)
     useEffect(() => {
@@ -212,6 +213,7 @@ const EventItemTeaser = ({ eventId }) => {
                                         activityCoordinates: coordinates,
                                     }
                                 })
+                                setNewCoordinates(coordinates)
                             } else {
                                 setCoordinates({
                                     variables: {
@@ -394,7 +396,7 @@ const EventItemTeaser = ({ eventId }) => {
                         <Weather 
                             id={eventId}
                             dateDiff={dateDiff} 
-                            coordinates={getCoordinatesData ? getCoordinatesData.getCoordinates.activityCoordinates : null}
+                            coordinates={getCoordinatesData ? getCoordinatesData.getCoordinates.activityCoordinates : newCoordinates}
                             lastCall={data ? data.getEventItem.activityApiLastCall : new Date(Date.now())}
                             savedIcon={getWeatherData ? getWeatherData.getWeather.activityWeatherIcon : null}
                             savedTemp={getWeatherData ? getWeatherData.getWeather.activityWeatherTemp : null}
