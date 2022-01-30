@@ -49,7 +49,7 @@ const Dashboard = () => {
     window.history.replaceState(null, "Dashboard", "/")
 
     const handleLogout = () => {
-        removeCookie('accessGranted')
+        removeCookie('accessGranted', { path: '/' })
     } 
 
     return (

@@ -6,7 +6,7 @@ const AuthError = () => {
     const [cookies, setCookie, removeCookie] = useCookies(['accessGranted'])
 
     const handleLogout = () => {
-        removeCookie('accessGranted')
+        removeCookie('accessGranted', {path: '/'})
     } 
 
     return (
