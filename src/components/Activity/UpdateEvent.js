@@ -153,6 +153,15 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather, refetchEvents }) 
         window.addEventListener('keydown', handleEsc)
     })
 
+    // Remove notification badges for this user if event is opened
+    useEffect(() => {
+        if (clicked) removeNotifications({
+            variables: {
+                eventId: id
+            }
+        })
+    }, [clicked])
+
     // id for eventItem
     const handleJoinChange = () => {
         if (joined) {
@@ -173,13 +182,6 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather, refetchEvents }) 
     }
     
     if (!clicked) return null
-
-    // Remove notification badges for this user if event is opened
-    if (clicked) removeNotifications({
-        variables: {
-            eventId: id
-        }
-    })
 
     if (loading) return <img src="/icons/loading.png" className="animate-spin h-9 w-9" />
 
