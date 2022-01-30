@@ -58,7 +58,7 @@ const Dashboard = () => {
                 <h1 className="text-2xl lg:text-4xl font-bold text-white font font-['Righteous']">Family Board</h1>
                 <div className="flex flex-row justify-between pr-5">
                     <User setBg={setBgSelection} bg={bgSelection} />
-                    <Family familyID={data.getFamily._id} />
+                    <Family familyID={data.getFamily ? data.getFamily._id : null} />
                     <img 
                         src="/icons/logout.png" 
                         className="h-9 w-9 ml-3 cursor-pointer opacity-60 hover:opacity-100" 
@@ -66,7 +66,7 @@ const Dashboard = () => {
                     />
                 </div>
             </div>
-            <ActivityList familyID={data.getFamily._id} />
+            <ActivityList familyID={data.getFamily ? data.getFamily._id : null} />
         </div>
     )
 }
