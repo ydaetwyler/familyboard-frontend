@@ -100,11 +100,10 @@ const EVENT_COMMENT_SUBSCRIPTION = gql`
     }
 `
 
-const EventItemTeaser = ({ eventId }) => {
+const EventItemTeaser = ({ eventId, toTop }) => {
     const [dateDiff, setDateDiff] = useState()
     const [currentDate] = useState(new Date())
     const [clicked, setClicked] = useState(false)
-    const [weatherData, setWeatherData] = useState()
     const { loading, error, data, refetch, subscribeToMore } = useQuery(GET_EVENT_ITEM, {
         variables: { _id: eventId }
     })
@@ -176,10 +175,6 @@ const EventItemTeaser = ({ eventId }) => {
                 }, 500);
             }
         })
-    }, [])
-
-    useEffect(() => {
-        if (getWeatherData) setWeatherData(getWeatherData)
     }, [])
 
     // dateDiff will be used to only make weather api calls if there already is a forecast available and to choose the type of call
@@ -273,6 +268,7 @@ const EventItemTeaser = ({ eventId }) => {
                     id={eventId}
                     item={data.getEventItem}
                     refetchEvents={refetch()}
+                    toTop={toTop}
                 />
             </div>
         )
@@ -318,6 +314,7 @@ const EventItemTeaser = ({ eventId }) => {
                     id={eventId}
                     item={data.getEventItem}
                     refetchEvents={refetch()}
+                    toTop={toTop}
                 />
             </div>
         )
@@ -360,6 +357,7 @@ const EventItemTeaser = ({ eventId }) => {
                     id={eventId}
                     item={data.getEventItem}
                     refetchEvents={refetch()}
+                    toTop={toTop}
                 />
             </div>
         )
@@ -410,6 +408,7 @@ const EventItemTeaser = ({ eventId }) => {
                     item={data ? data.getEventItem : null}
                     weather={getWeatherData ? getWeatherData.getWeather : null}
                     refetchEvents={refetch()}
+                    toTop={toTop}
                 />
             </div>
         )

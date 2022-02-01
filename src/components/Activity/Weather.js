@@ -28,12 +28,10 @@ const Weather = ({ id, dateDiff, coordinates, lastCall, savedIcon, savedTemp }) 
         const dateLastCall = new Date(dateStringLastCall)
         let diff = (dateNow.getTime() - dateLastCall.getTime()) / 1000
         diff /= (60 * 60)
-        console.log(Math.abs(Math.round(diff)))
         return Math.abs(Math.round(diff))
     }
 
     useEffect(() => {
-        console.log(lastCall)
         if (lastCall) {
             setHoursDiff(hoursDiffCalc(currentTime, lastCall))
         } 

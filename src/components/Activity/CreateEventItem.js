@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Formik, Form } from 'formik'
 import { useMutation } from '@apollo/client'
 
@@ -13,12 +13,16 @@ import CheckError from '../Errors/CheckError'
 
 import { CREATE_EVENT_ITEM } from '../../utils/mutations'
 
-const CreateEventItem = ({ clicked, setClicked, familyID }) => {
+const CreateEventItem = ({ clicked, setClicked, familyID, toTop }) => {
     const [galleryClicked, setGalleryClicked] = useState(false)
     const [imgUrl, setImgUrl] = useState('/activities/image38.jpg')
     const [createEventItem, { loading, error }] = useMutation(CREATE_EVENT_ITEM, {
         onCompleted: () => setClicked(false)
     })
+
+    useEffect(() => {
+        window.scrollTo({ behaviour: 'smooth', top: toTop.current.offsetTop })
+    }, [clicked])
 
     if (!clicked) return null
 

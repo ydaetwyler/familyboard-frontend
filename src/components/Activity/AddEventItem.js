@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import CreateEventItem from './CreateEventItem'
 
-const AddEventItem = ({ familyID, refetchEvents }) => {
+const AddEventItem = ({ familyID, refetchEvents, toTop }) => {
     const [clicked, setClicked] = useState(false)
 
     return (
@@ -16,7 +16,8 @@ const AddEventItem = ({ familyID, refetchEvents }) => {
                 clicked={clicked} 
                 setClicked={setClicked} 
                 familyID={familyID} 
-                refetchEvents={refetchEvents} 
+                refetchEvents={refetchEvents}
+                toTop={toTop}
             />
         </>
     )

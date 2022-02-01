@@ -28,7 +28,7 @@ const EVENT_ITEM_SUBSCRIPTION = gql`
     }
 `
 
-const ActivityList = ({ familyID }) => {
+const ActivityList = ({ familyID, toTop }) => {
     const { loading, error, data, refetch, subscribeToMore } = useQuery(GET_ACTIVITIES)
     const [initialEvents, setInitialEvents] = useState([])
     const [events, setEvents] = useState([])
@@ -95,12 +95,13 @@ const ActivityList = ({ familyID }) => {
                 <span className="ml-3 text-white text-sm font-medium">Show past events</span>
             </label>
             <div className="mt-20 flex flex-row flex-wrap justify-evenly">
-                {!togglePast ? <AddEventItem familyID={familyID} /> : null}
+                {!togglePast ? <AddEventItem familyID={familyID} toTop={toTop} /> : null}
                 {events.map((item) => {
                     return <EventItemTeaser 
                                 key={item._id}
                                 eventId={item._id}
-                                familyID={familyID} 
+                                familyID={familyID}
+                                toTop={toTop}
                             />
                 })}
             </div>

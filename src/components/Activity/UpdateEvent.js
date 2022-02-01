@@ -68,7 +68,7 @@ const EVENT_COMMENT_SUBSCRIPTION = gql`
     }
 `
 
-const UpdateEvent = ({ clicked, setClicked, id, item, weather, refetchEvents }) => {
+const UpdateEvent = ({ clicked, setClicked, id, item, weather, refetchEvents, toTop }) => {
     const [removeParticipant] = useMutation(REMOVE_PARTICIPANT, {
         onCompleted: () => refetchEvents
     })
@@ -180,6 +180,10 @@ const UpdateEvent = ({ clicked, setClicked, id, item, weather, refetchEvents }) 
             setJoined(true)
         }
     }
+
+    useEffect(() => {
+        window.scrollTo({ behaviour: 'smooth', top: toTop.current.offsetTop })
+    }, [clicked])
     
     if (!clicked) return null
 

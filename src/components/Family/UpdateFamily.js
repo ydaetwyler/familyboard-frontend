@@ -49,7 +49,7 @@ const UpdateFamily = ({ familyID, clicked, setClicked, initialFamily, initialAva
     if (!clicked) return null
 
     return (
-        <div className="h-3/5 min-h-[860px] max-w-[480px] w-[95%] min-w-[300px] bg-white/[.13] absolute translate-x-2/4 top-2/4 mt-24 right-2/4 rounded-md backdrop-blur-md border-2 border-white/[.1] shadow-xl shadow-gray-900/[.6] py-12 px-9 before:(p-0, m-0, box-border) after:(p-0, m-0, box-border) font-['Mulish'] z-50">
+        <div className="h-3/5 min-h-[960px] max-w-[480px] w-[95%] min-w-[300px] bg-white/[.13] absolute translate-x-2/4 top-32 mt-24 right-2/4 rounded-md backdrop-blur-md border-2 border-white/[.1] shadow-xl shadow-gray-900/[.6] py-12 px-9 before:(p-0, m-0, box-border) after:(p-0, m-0, box-border) font-['Mulish'] z-50">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 absolute top-1.5 right-1.5 opacity-30 hover:opacity-100 cursor-pointer" viewBox="0 0 20 20" fill="rgba(198, 198, 198, 0.8)" onClick={() => setClicked(false)}>
                 <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
             </svg>
